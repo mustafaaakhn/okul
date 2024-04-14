@@ -1,0 +1,475 @@
+<!-- MUSTAFA AKHAN 221ADB228 -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUSTAFA AKHAN 221ADB228 | Student Library</title>
+    <link rel="icon" type="image/x-icon" href="https://vectorflags.s3.amazonaws.com/flags/tr-circle-01.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* MUSTAFA AKHAN 221ADB228 */
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .title {
+            text-align: center;
+            text-decoration: underline;
+        }
+
+        .info-button {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 50%;
+            background-color: #0056b3;
+            cursor: pointer;
+            position: relative;
+            left: 160px;
+            bottom: 85px;
+        }
+
+        .info-button i {
+            font-size: 18px;
+        }
+
+        .info-text {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px;
+            background-color: #f5f5f5;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            z-index: 1;
+        }
+
+        .info-button:hover .info-text {
+            display: block;
+            width: 200px;
+            height: 50px;
+            color: #000;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            color: #0056b3;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .actions-row,
+        .lists-row {
+            display: flex;
+            overflow-x: auto;
+        }
+
+        .action-item,
+        .list-item {
+            flex: none;
+            margin-right: 10px;
+            padding: 20px;
+            background-color: #e9efff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            min-width: 200px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select,
+        button {
+            width: 99%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .activity-log {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+
+        .activity-log h2 {
+            color: #333;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="title">Library Management System</h1>
+        <button class="info-button">
+            <i class="fas fa-info-circle"></i> <span class="info-text">The interface could have looked better, but I did not focus on that much.</span>
+        </button>
+        <div id="addBookForm">
+            <h2 style="text-decoration: underline">Add Book</h2>
+            <input type="text" id="bookTitle" placeholder="Title">
+            <input type="text" id="bookAuthor" placeholder="Author">
+            <input type="text" id="bookSerialNumber" placeholder="Serial Number">
+            <input type="number" id="bookQuantity" placeholder="Quantity">
+            <button id="addBook">Add Book</button>
+        </div>
+
+        <div id="registerStudentForm">
+            <h2 style="text-decoration: underline">Register a Student</h2>
+            <input type="text" id="studentName" placeholder="Student Name">
+            <input type="text" id="studentID" placeholder="Student ID">
+            <button id="registerStudent">Register Student</button>
+        </div>
+
+        <div id="updateBookForm">
+            <h2 style="text-decoration: underline">Update Quantity</h2>
+            <input type="text" id="updateSerialNumber" placeholder="Serial Number">
+            <input type="number" id="updateQuantity" placeholder="New Quantity">
+            <button id="updateBook">Update Quantity</button>
+        </div>
+
+        <div id="searchBySerialForm">
+            <h2 style="text-decoration: underline">Search Book by Serial Number</h2>
+            <input type="text" id="searchSerialNumber" placeholder="Serial Number">
+            <button id="searchBySerial">Search</button>
+            <div id="searchSerialResult"></div>
+        </div>
+
+        <div id="searchByAuthorForm">
+            <h2 style="text-decoration: underline">Search Books by Author</h2>
+            <input type="text" id="searchAuthor" placeholder="Author Name">
+            <button id="searchByAuthor">Search</button>
+            <div id="authorSearchResult"></div>
+        </div>
+
+        <div id="bookSection">
+            <h2 style="text-decoration: underline">Books Available</h2>
+            <div id="bookList">
+
+            </div>
+        </div>
+
+        <div id="studentSection">
+            <h2 style="text-decoration: underline">Registered Students</h2>
+            <div id="studentList"></div>
+        </div>
+
+        <div id="checkoutForm">
+            <h2 style="text-decoration: underline">Check Out a Book</h2>
+            <input type="text" id="checkoutStudentID" placeholder="Student ID">
+            <input type="text" id="checkoutBookSerial" placeholder="Book Serial Number">
+            <button id="performCheckout">Check Out</button>
+        </div>
+
+        <div id="checkInForm">
+            <h2 style="text-decoration: underline">Check In a Book</h2>
+            <input type="text" id="checkInStudentID" placeholder="Student ID">
+            <input type="text" id="checkInSerial" placeholder="Book Serial Number">
+            <button id="checkInBook">Check In</button>
+        </div>
+        <div id="booksDisplay">
+        </div>
+
+        <div class="activity-log">
+            <h2 style="text-decoration: underline">Check-out Activity</h2>
+            <div id="checkoutActivity"></div>
+        </div>
+        <div class="activity-log">
+            <h2 style="text-decoration: underline">Check-in Activity</h2>
+            <div id="checkinActivity"></div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        // MUSTAFA AKHAN 221ADB228
+
+        $(document).ready(function() {
+            let books = [{
+                    title: "The Godfather",
+                    author: "Mario Puzo",
+                    serial: "978-0451167712",
+                    quantity: 3
+                },
+                {
+                    title: "The Lord of the Rings",
+                    author: "J.R.R. Tolkien",
+                    serial: "978-0547928217",
+                    quantity: 5
+                },
+                {
+                    title: "Frankenstein",
+                    author: "Mary Shelley",
+                    serial: "978-0140621822",
+                    quantity: 7
+                }
+            ];
+            let students = [{
+                    name: "Pablo Escobar",
+                    id: "001"
+                },
+                {
+                    name: "Tom Cruise",
+                    id: "002"
+                },
+                {
+                    name: "Walter White",
+                    id: "003"
+                },
+            ];
+
+            // Add a book
+            $('#addBook').click(function() {
+                const title = $('#bookTitle').val();
+                const author = $('#bookAuthor').val();
+                const serial = $('#bookSerialNumber').val();
+                const quantity = parseInt($('#bookQuantity').val(), 10);
+
+                if (title && author && serial && !isNaN(quantity)) {
+                    books.push({
+                        title,
+                        author,
+                        serial,
+                        quantity
+                    });
+                    alert('Book added successfully!');
+                    displayBooks();
+                } else {
+                    alert('Fill all the fields.');
+                }
+            });
+
+            // Register a student
+            $('#registerStudent').click(function() {
+                const name = $('#studentName').val();
+                const id = $('#studentID').val();
+
+                if (name && id) {
+                    students.push({
+                        name,
+                        id
+                    });
+                    alert('Student registered successfully!');
+                    displayStudents();
+                } else {
+                    alert('Fill all the fields.');
+                }
+            });
+
+            // Display books
+            function displayBooks() {
+                const list = $('#bookList');
+                list.empty();
+
+                books.forEach(book => {
+                    const bookEntry = `<div>Title: ${book.title}, Author: ${book.author}, Serial Number: ${book.serial}, Quantity: ${book.quantity}</div>`;
+                    list.append(bookEntry);
+                });
+            }
+
+            // Display registered students
+            function displayStudents() {
+                const list = $('#studentList');
+                list.empty();
+
+                students.forEach(student => {
+                    const studentEntry = `<div>Name: ${student.name}, Student ID: ${student.id}</div>`;
+                    list.append(studentEntry);
+                });
+            }
+
+
+            // Update
+
+            $('#updateBook').click(function() {
+                const serial = $('#updateSerialNumber').val();
+                const newQuantity = parseInt($('#updateQuantity').val(), 10);
+
+                if (!serial || isNaN(newQuantity) || newQuantity < 0) {
+                    alert('Fill a valid serial number and quantity.');
+                    return;
+                }
+
+                const bookIndex = books.findIndex(book => book.serial === serial);
+
+                if (bookIndex !== -1) {
+                    books[bookIndex].quantity = newQuantity;
+                    alert('Book quantity updated successfully.');
+                    displayBooks();
+                } else {
+                    alert('No book found with that serial number.');
+                }
+            });
+
+            // Search by serial number
+
+            $('#searchBySerial').click(function() {
+                const serial = $('#searchSerialNumber').val();
+                const searchResultDiv = $('#searchSerialResult');
+
+                searchResultDiv.empty();
+
+                if (!serial) {
+                    searchResultDiv.append('<p>Enter a serial number to search.</p>');
+                    return;
+                }
+
+                const book = books.find(book => book.serial === serial);
+
+                if (book) {
+                    searchResultDiv.append(`<p>Title: ${book.title}, Author: ${book.author}, Serial Number: ${book.serial}, Quantity: ${book.quantity}</p>`);
+                } else {
+                    searchResultDiv.append('<p>No book found with that serial number.</p>');
+                }
+            });
+
+            // Search by author
+
+            $('#searchByAuthor').click(function() {
+                const author = $('#searchAuthor').val().trim().toLowerCase();
+                const searchResultDiv = $('#authorSearchResult');
+
+                searchResultDiv.empty();
+
+                if (!author) {
+                    searchResultDiv.append('<p>Enter an author to search.</p>');
+                    return;
+                }
+
+                let booksByAuthor = books.filter(book => book.author.toLowerCase().includes(author));
+
+                if (booksByAuthor.length > 0) {
+                    booksByAuthor.forEach(book => {
+                        searchResultDiv.append(`<p>Title: ${book.title}, Author: ${book.author}, Serial Number: ${book.serial}, Quantity: ${book.quantity}</p>`);
+                    });
+                } else {
+                    searchResultDiv.append('<p>No books found by that author.</p>');
+                }
+            });
+
+            // Check Out
+
+            $(document).ready(function() {
+
+                let checkouts = [];
+
+                $('#performCheckout').click(function() {
+                    const studentID = $('#checkoutStudentID').val();
+                    const bookSerial = $('#checkoutBookSerial').val();
+
+                    const studentExists = students.some(student => student.id === studentID);
+                    if (!studentExists) {
+                        alert("Student ID not found.");
+                        return;
+                    }
+
+                    const bookIndex = books.findIndex(book => book.serial === bookSerial);
+                    if (bookIndex === -1) {
+                        alert("Book serial number not found.");
+                        return;
+                    }
+
+                    if (books[bookIndex].quantity <= 0) {
+                        alert("This book is unavailable for checkout.");
+                        return;
+                    }
+
+                    //  If student check out more than 3 books
+                    const checkoutCount = checkouts.filter(checkout => checkout.studentID === studentID).length;
+                    if (checkoutCount >= 3) {
+                        alert("A student can't check out more than 3 books.");
+                        return;
+                    }
+
+                    books[bookIndex].quantity--;
+                    checkouts.push({
+                        studentID: studentID,
+                        bookSerial: bookSerial
+                    });
+
+                    alert("Book checked out successfully.");
+                    displayBooks();
+                });
+
+                displayBooks();
+            });
+
+            // Check in
+
+            $('#checkInBook').click(function() {
+                const studentID = $('#checkInStudentID').val().trim();
+                const serial = $('#checkInSerial').val().trim();
+
+                const bookIndex = books.findIndex(book => book.serial === serial);
+                if (bookIndex === -1) {
+                    alert('No book found with that serial number.');
+                    return;
+                }
+
+
+                books[bookIndex].quantity++;
+                alert('Book checked in successfully.');
+
+                displayBooks(); //
+            });
+
+            // Activity log
+
+            $('#performCheckout').click(function() {
+                const studentID = $('#checkoutStudentID').val().trim();
+                const serial = $('#checkoutBookSerial').val().trim();
+
+                // Log check-in activity
+                $('#checkoutActivity').append(`<p>Student ${studentID} checked out the book with the serial number ${serial}.</p>`);
+            });
+
+            $('#checkInBook').click(function() {
+                const studentID = $('#checkInStudentID').val().trim();
+                const serial = $('#checkInSerial').val().trim();
+
+                // Log check-in activity
+
+                $('#checkinActivity').append(`<p>Student ${studentID} checked in book with the serial number ${serial}.</p>`);
+            });
+
+            displayBooks();
+            displayStudents();
+        });
+
+    </script>
+</body>
+
+</html>
